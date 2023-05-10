@@ -1,43 +1,25 @@
-import React, { Fragment } from 'react'
-import { BrowserRouter as Router,Routes,Route,Link } from 'react-router-dom';
-import Header from './components/Header';
-import Login from './components/Login';
-import Destination from './components/Destination'
-import Signup from './components/SignUp';
-import Show from './components/Show';
-import Footer from './components/Footer';
+import React, { useState,useContext } from 'react';
+import MainMenu from './components/MainMenu';
+import Quiz from './components/Quiz';
+import EndScreen from './components/EndScreen';
+import { TestContext } from './Helpers/Contexts';
 
 function App() {
-    return ( 
-       
-       <Router>
-        <Header />
-          <Routes>
-          <Route  exact path="/" element={
-             <Fragment>
-             <Show />
-             <Destination />
-             
-             </Fragment>
+  const [gameState,setGameState] = useState("menu");
+  const[score,setScore] =useState(0)
 
-
-           } >
-         
-           </Route>
-          <Route  path="/login" element = {<Login />}> </Route>
-           
-          <Route  path="/signup" element = {<Signup />}> </Route>
-           
-         
-          </Routes>
-       
-    
-       <Footer />
-       
-      
-       </Router>
-      
-     );
+  return(
+    <div className="App">
+        <h2>Quiz App</h2>
+       <TestContext.Provider value={{gameState,setGameState,score,setScore}}>
+          {gameState==="menu" && <MainMenu />}
+          {gameState==="quiz" && <Quiz />}
+          {gameState==="endScreen" && <EndScreen />}
+        </TestContext.Provider>
+    </div>
+   
+  )
 }
+
 
 export default App;
